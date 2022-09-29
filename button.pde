@@ -4,6 +4,7 @@ public class Button{
   public boolean lit = false;
   String text;
   String brailleText;
+  public boolean tempButton = false; //whether or not the button should only stay lit while pressed
   
   
   public Button(int x,int y,String text,String brailleText){
@@ -18,10 +19,10 @@ public class Button{
     if(this.brailleText != ""){
       textFont(braile, 32);
       fill(0, 0, 0);
-      ellipse(x+90,y+25,49,49);
-      rect(x+20,y,70,49);
+      ellipse(x+40+textWidth(this.brailleText),y+25,49,49);
+      rect(x+20,y,textWidth(this.brailleText)+15,49);
       fill(255,255,255);
-      text(this.brailleText, x+85-(textWidth(this.brailleText)/2), y+36); 
+      text(this.brailleText, x+55, y+36); 
     }
     textFont(defaultFont, 32);
     fill(0, 0, 0);
@@ -34,7 +35,7 @@ public class Button{
     }else{
       image(darkButton,this.x,this.y,buttonSize,buttonSize);
     }
-    textSize(32);
+    textSize(40-(this.text.length()*5));
     if(this.lit){
       fill(0, 255, 0);
     }else{
@@ -50,7 +51,7 @@ public class Button{
   boolean checkClick(){
     float disX = this.x+buttonSize/2 - mouseX;
     float disY = this.y+buttonSize/2 - mouseY;
-    if (sqrt(sq(disX) + sq(disY)) < buttonSize/2 ) {
+    if (sqrt(sq(disX) + sq(disY)) < buttonSize/2 && mousePressed) {
       return true;
     } else {
       return false;
